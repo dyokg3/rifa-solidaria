@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rifa Solidária IDEB AR 17</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f6fa;
+    color: #111;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    color: #002147;
+  }
+  .highlight {
+    color: #c1121f;
+    font-weight: bold;
+  }
+  input, button {
+    padding: 10px;
+    margin: 10px auto;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 90%;
+    max-width: 320px;
+    display: block;
+  }
+  button {
+    background-color: #002147;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  button:hover {
+    background-color: #c1121f;
+  }
+  .info-box {
+    margin-top: 20px;
+    background: #fff;
+    padding: 15px;
+    border: 2px solid #002147;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 320px;
+    text-align: left;
+  }
+  .pix-key {
+    font-weight: bold;
+    font-size: 18px;
+    color: #002147;
+    word-break: break-all;
+  }
+  a.whatsapp-btn {
+    display: inline-block;
+    background-color: #25d366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+  <h1>Rifa Solidária IDEB AR 17</h1>
+  <p><span class="highlight">R$ 20,00</span> por cota • Prêmio de <span class="highlight">R$ 1.000,00</span></p>
+  <p>Sua contribuição ajuda na <strong>compra de novos bancos para a igreja</strong>.</p>
+
+  <input type="text" id="nameInput" placeholder="Nome completo" />
+  <input type="tel" id="phoneInput" placeholder="Telefone com DDD" />
+  <button onclick="registerCota()">Confirmar Cota</button>
+
+  <div id="resultBox" class="info-box" style="display:none;"></div>
+
+<script>
+  let nextCota = 1;
+  const maxCotas = 500;
+  const pixKey = "03361615143";
+  const valorPix = 20.00;
+
+  function formatCota(num) {
+    return num.toString().padStart(3, '0');
+  }
+
+  function registerCota() {
+    const name = document.getElementById("nameInput").value.trim();
+    const phone = document.getElementById("phoneInput").value.trim();
+    if (!name || !phone) {
+      alert("Por favor, preencha nome e telefone.");
+      return;
+    }
+    if (nextCota > maxCotas) {
+      alert("Todas as cotas foram preenchidas.");
+      return;
+    }
+    const cotaNum = formatCota(nextCota);
+    nextCota++;
+
+    const whatsappLink = `https://wa.me/message/AH5XTCGFGVGQL1?text=${encodeURIComponent("Olá, meu nome é " + name + " e fiz o pagamento da rifa IDEB AR 17. Minha cota é " + cotaNum + ". Segue o comprovante em anexo.")}`;
+
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+      <h3>✅ Cota registrada com sucesso!</h3>
+      <p><strong>Nome:</strong> ${name}<br>
+      <strong>Telefone:</strong> ${phone}<br>
+      <strong>Sua cota:</strong> <span class="highlight">${cotaNum}</span></p>
+      <p><strong>📌 Faça um Pix de R$ ${valorPix.toFixed(2).replace('.', ',')} para:</strong></p>
+      <p>Chave Pix (CPF):<br><span class="pix-key">${pixKey}</span></p>
+      <p>Depois, envie o comprovante pelo botão abaixo:</p>
+      <a class="whatsapp-btn" href="${whatsappLink}" target="_blank">📩 Enviar comprovante via WhatsApp</a>
+    `;
+
+    // Limpar campos
+    document.getElementById("nameInput").value = "";
+    document.getElementById("phoneInput").value = "";
+  }
+</script>
+</body>
+</html>
